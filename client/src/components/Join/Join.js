@@ -24,7 +24,7 @@ export default function SignIn() {
       console.log("no name");
     } else {
       dispatch(login(name, room));
-      console.log(name, room);
+      console.log("n room", name, room);
       socket.emit("join", { name, room }, (error) => {
         if (error) {
           alert(error);

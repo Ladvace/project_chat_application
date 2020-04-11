@@ -18,7 +18,9 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  // const 
+  const data = useSelector((state) => state);
+
+  console.log("d", data);
 
   const ENDPOINT = "http://localhost:5000";
 

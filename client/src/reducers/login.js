@@ -1,16 +1,14 @@
 import * as ActionTypes from "../actions/actionTypes";
 
-const login = (state = { name: null, room: null }, action) => {
+export default login = (state = {}, action) => {
+  console.log("DISPATCH", action.data, state);
   switch (action.type) {
     case ActionTypes.LOGIN:
       return {
         ...state,
-        name: action.name,
-        room: action.room,
+        data: { name: action.name, room: action.room },
       };
     default:
       return state;
   }
 };
-
-export default login;
