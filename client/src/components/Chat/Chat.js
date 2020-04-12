@@ -11,7 +11,7 @@ import "./Chat.css";
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chat = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [users, setUsers] = useState("");
@@ -25,7 +25,7 @@ const Chat = ({ location }) => {
   const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
-    const { name, room } = queryString.parse(location.search);
+    // const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
 
