@@ -64,9 +64,7 @@ export default function SignIn() {
             onChange={(event) => setRoom(event.target.value)}
           />
         </div>
-        <Link
-          onClick={(e) => (!name && !room ? e.preventDefault() : joinRoom(e))}
-        >
+        <Link onClick={(e) => joinRoom(e)}>
           <button className={"button mt-20"} type="submit">
             Sign In
           </button>
