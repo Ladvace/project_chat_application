@@ -6,7 +6,8 @@ export default login = (state = {}, action) => {
     case ActionTypes.LOGIN:
       return {
         ...state,
-        data: { name: action.name, room: action.room },
+        name: action.name,
+        room: action.room,
       };
     default:
       return state;

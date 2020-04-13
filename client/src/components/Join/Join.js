@@ -28,8 +28,20 @@ export default function SignIn() {
   }, [ENDPOINT]);
 
   const joinRoom = () => {
-    dispatch(login(name, room));
-    dispatch(push("/chat"));
+    if (!name && !room) {
+      seTenterValidData(true);
+      setTimeout(() => {
+        seTenterValidData(false);
+      }, 2000);
+    } else if (!name || !room) {
+      seTenterValidData(true);
+      setTimeout(() => {
+        seTenterValidData(false);
+      }, 2000);
+    } else {
+      dispatch(login(name, room));
+      dispatch(push("/chat"));
+    }
 
     console.log("n room", name, room);
     socket.emit("join", { name, room }, (error) => {
@@ -70,7 +82,7 @@ export default function SignIn() {
           </button>
         </Link>
         <div>
-          {!name && !room && <Error>Enter all the required data</Error>}
+          {enterValidData && <Error>Enter all the required data</Error>}
         </div>
       </div>
     </div>
