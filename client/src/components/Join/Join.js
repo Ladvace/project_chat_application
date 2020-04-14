@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { push } from "connected-react-router";
 import io from "socket.io-client";
 import login from "../../actions/login";
@@ -42,18 +41,6 @@ export default function SignIn() {
       dispatch(login(name, room));
       dispatch(push("/chat"));
     }
-
-    console.log("n room", name, room);
-    socket.emit("join", { name, room }, (error) => {
-      if (error) {
-        alert(error);
-      }
-    });
-    socket.emit("test", { name, room }, (error) => {
-      if (error) {
-        alert(error);
-      }
-    });
   };
 
   return (
@@ -76,11 +63,13 @@ export default function SignIn() {
             onChange={(event) => setRoom(event.target.value)}
           />
         </div>
-        <Link onClick={(e) => joinRoom(e)}>
-          <button className={"button mt-20"} type="submit">
-            Sign In
-          </button>
-        </Link>
+        <button
+          onClick={(e) => joinRoom(e)}
+          className={"button mt-20"}
+          type="submit"
+        >
+          Sign In
+        </button>
         <div>
           {enterValidData && <Error>Enter all the required data</Error>}
         </div>

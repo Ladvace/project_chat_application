@@ -18,7 +18,7 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const data = useSelector((state) => state);
+  const data = useSelector((state) => state.login);
 
   console.log("d", data);
 
@@ -29,11 +29,11 @@ const Chat = () => {
 
     socket = io(ENDPOINT);
 
-    // socket.emit("join", { name: "paolo", room: "room" }, (error) => {
-    //   if (error) {
-    //     alert(error);
-    //   }
-    // });
+    socket.emit("join", { name: data.name, room: data.room }, (error) => {
+      if (error) {
+        alert(error);
+      }
+    });
   }, [ENDPOINT]);
 
   useEffect(() => {

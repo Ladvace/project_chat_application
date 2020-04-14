@@ -5,9 +5,7 @@ export function login(name, room) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.LOGIN,
-      // data: { name: name, room: room },
-      name,
-      room,
+      data: { name: name, room: room },
     });
   };
 }
