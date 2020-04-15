@@ -17,29 +17,32 @@ app.use(router);
 io.on("connect", (socket) => {
   console.log("connected");
   socket.on("join", ({ name, room }, callback) => {
-    console.log("JOINED", name, room);
-    const { error, user } = addUser(socket.id, name, room);
-    console.log("test", socket.id, name, room, user);
+    if (name && room) {
+      console.log("JOINED", name, room);
+      const { error, user } = addUser(socket.id, name, room);
 
-    if (error) return callback(error);
+      console.log("test", socket.id, name, room, user);
 
-    socket.join(user.room);
+      if (error) return callback(error);
 
-    socket.emit("message", {
-      user: "admin",
-      text: `${user.name}, welcome to room ${user.room}.`,
-    });
+      socket.join(user.room);
 
-    socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+      socket.emit("message", {
+        user: "admin",
+        text: `${user.name}, welcome to room ${user.room}.`,
+      });
 
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
+      socket.broadcast
+        .to(user.room)
+        .emit("message", { user: "admin", text: `${user.name} has joined!` });
 
-    callback();
+      io.to(user.room).emit("roomData", {
+        room: user.room,
+        users: getUsersInRoom(user.room),
+      });
+
+      callback();
+    } else socket.emit("disconnectChat");
   });
 
   socket.on("sendMessage", (message, callback) => {

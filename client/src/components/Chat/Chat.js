@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 import Messages from "../Messages/Messages";
 import InfoBar from "../InfoBar/InfoBar";
 import Input from "../Input/Input";
@@ -18,6 +18,8 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
+  const dispatch = useDispatch();
+
   const data = useSelector((state) => state.login);
 
   console.log("d", data);
@@ -28,7 +30,7 @@ const Chat = () => {
     // const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
-
+    setRoom(data.room);
     socket.emit("join", { name: data.name, room: data.room }, (error) => {
       if (error) {
         alert(error);
@@ -37,10 +39,6 @@ const Chat = () => {
   }, [ENDPOINT]);
 
   useEffect(() => {
-    socket.on("prova", { name, room }, (error) => {
-      console.log("prova");
-    });
-
     socket.on("message", (message) => {
       setMessages((messages) => [...messages, message]);
     });
@@ -48,12 +46,14 @@ const Chat = () => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
+
+    socket.on("disconnectChat", () => {
+      dispatch(push("/"));
+    });
   }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
-
-    console.log("sendMSG");
     if (message) {
       console.log("messaggio", message, socket);
       socket.emit("sendMessage", message, () => setMessage(""));
