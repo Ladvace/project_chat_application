@@ -16,12 +16,6 @@ export default function configureStore(preloadedState) {
     thunkMiddleware,
   ];
 
-  console.log(
-    "PROCESS",
-    process.env.NODE_ENV === "development" &&
-      window.__REDUX_DEVTOOLS_EXTENSION__
-  );
-
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
   const enhancers =

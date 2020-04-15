@@ -22,8 +22,6 @@ const Chat = () => {
 
   const data = useSelector((state) => state.login);
 
-  console.log("d", data);
-
   const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
@@ -31,6 +29,7 @@ const Chat = () => {
 
     socket = io(ENDPOINT);
     setRoom(data.room);
+    setName(data.name);
     socket.emit("join", { name: data.name, room: data.room }, (error) => {
       if (error) {
         alert(error);
@@ -55,7 +54,6 @@ const Chat = () => {
   const sendMessage = (event) => {
     event.preventDefault();
     if (message) {
-      console.log("messaggio", message, socket);
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
