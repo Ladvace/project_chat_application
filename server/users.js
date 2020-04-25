@@ -1,5 +1,16 @@
 const users = [];
 
+const checkUser = (id, nameParam, roomParam) => {
+  let name = nameParam.trim().toLowerCase();
+  let room = roomParam.trim().toLowerCase();
+
+  const existingUser = users.find(
+    (user) => user.room === room && user.name === name
+  );
+
+  return existingUser ? true : false;
+};
+
 const addUser = (id, nameParam, roomParam) => {
   let name = nameParam.trim().toLowerCase();
   let room = roomParam.trim().toLowerCase();
@@ -28,4 +39,4 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-module.exports = { addUser, removeUser, getUser, getUsersInRoom };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom, checkUser };

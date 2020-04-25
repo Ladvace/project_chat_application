@@ -38,8 +38,15 @@ export default function SignIn() {
         seTenterValidData(false);
       }, 2000);
     } else {
-      dispatch(login(name, room));
-      dispatch(push("/chat"));
+      socket.emit("checkUser", { name: name, room: room }, (error) => {
+        if (error) {
+          console.log("err");
+          alert("User Already Exist");
+        } else {
+          dispatch(login(name, room));
+          dispatch(push("/chat"));
+        }
+      });
     }
   };
 

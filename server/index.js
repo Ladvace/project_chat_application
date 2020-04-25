@@ -3,7 +3,13 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+  checkUser,
+} = require("./users");
 
 const router = require("./router");
 
@@ -16,6 +22,11 @@ app.use(router);
 
 io.on("connect", (socket) => {
   console.log("connected");
+  socket.on("checkUser", ({ name, room }, callback) => {
+    const userExist = checkUser(socket.id, name, room);
+
+    callback(userExist);
+  });
   socket.on("join", ({ name, room }, callback) => {
     if (name && room) {
       const { error, user } = addUser(socket.id, name, room);
