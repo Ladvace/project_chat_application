@@ -1,14 +1,15 @@
 .form {
-  max-height: 70px;
+  max-height: 300px;
   display: flex;
   border-top: 2px solid #d3d3d3;
 }
 
 .input {
-  border: none;
+  border: #ff6700 solid 5px;
   border-radius: 0;
   width: 80%;
   font-size: 1.2em;
+  padding: 0 0 0 20px;
 }
 
 input:focus,
@@ -21,7 +22,7 @@ select:focus {
   color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
-  background: #2979ff;
+  background: #ff6700;
   padding: 20px;
   display: inline-block;
   border: none;
