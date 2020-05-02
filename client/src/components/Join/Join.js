@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { push } from "connected-react-router";
 import io from "socket.io-client";
 import login from "../../actions/login";
+import logo from "../../assets/logo.png";
 import "./Join.css";
 
 let socket;
@@ -11,6 +12,24 @@ let socket;
 const Error = styled.div`
   color: red;
   margin-top: 20px;
+`;
+
+const Logo = styled.img`
+  width: 300px;
+`;
+
+const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const Input = styled.input`
+  border: 0;
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 15px 20px;
+  width: 100%;
 `;
 
 export default function SignIn() {
@@ -52,20 +71,18 @@ export default function SignIn() {
 
   return (
     <div className="joinOuterContainer">
-      <div className="joinInnerContainer">
-        <h1 className="heading">Join</h1>
+      <InnerContainer>
+        <Logo src={logo} />
         <div>
-          <input
+          <Input
             placeholder="Name"
-            className="joinInput"
             type="text"
             onChange={(event) => setName(event.target.value)}
           />
         </div>
         <div>
-          <input
+          <Input
             placeholder="Room"
-            className="joinInput mt-20"
             type="text"
             onChange={(event) => setRoom(event.target.value)}
           />
@@ -80,7 +97,7 @@ export default function SignIn() {
         <div>
           {enterValidData && <Error>Enter all the required data</Error>}
         </div>
-      </div>
+      </InnerContainer>
     </div>
   );
 }

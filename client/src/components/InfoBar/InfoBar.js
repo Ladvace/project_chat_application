@@ -2,8 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faCircle } from "@fortawesome/free-solid-svg-icons";
-import onlineIcon from "../../icons/onlineIcon.png";
-import closeIcon from "../../icons/closeIcon.png";
+import logo from "../../assets/smallLogo.png";
 import "./InfoBar.css";
 
 import { push } from "connected-react-router";
@@ -17,8 +16,13 @@ const InfoBar = ({ room }) => {
         &nbsp;
         <h3>room {room}</h3>
       </div>
+      <img src={logo} />
       <div className="rightInnerContainer">
-        <FontAwesomeIcon icon={faTimes} onClick={() => dispatch(push("/"))} />
+        <FontAwesomeIcon
+          style={{ color: "white" }}
+          icon={faTimes}
+          onClick={() => dispatch(push("/"))}
+        />
       </div>
     </div>
   );

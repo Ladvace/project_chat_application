@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import queryString from "query-string";
+import { createReadStream } from "fs";
+import base64 from "base64-stream";
+import getStream from "get-stream";
 import io from "socket.io-client";
 import { useSelector, useDispatch } from "react-redux";
 import { push } from "connected-react-router";
@@ -17,8 +19,13 @@ const Chat = () => {
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [image, setImage] = useState(null);
+  const [b64Image, setB64Image] = useState(null);
 
   const dispatch = useDispatch();
+
+  let fileReader = new FileReader();
+  let slice;
 
   const data = useSelector((state) => state.login);
 
@@ -49,11 +56,46 @@ const Chat = () => {
     });
   }, []);
 
-  const sendMessage = (event) => {
+  const uploadImage = async (e) => {
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      setB64Image(reader.result);
+      console.log("I", reader.result);
+      // this.setState({
+      //   file: file,
+      //   imagePreviewUrl: reader.result,
+      // });
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const sendMessage = async (event) => {
     event.preventDefault();
-    if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+    if (setB64Image) {
+      console.log("TES", b64Image);
+      socket.emit("sendMessage", { type: "img", content: b64Image }, () =>
+        setB64Image(null)
+      );
+      // slice = image.slice(0, 100000);
+      // fileReader.readAsArrayBuffer(slice);
+      // fileReader.onload = (evt) => {
+      //   let arrayBuffer = fileReader.result;
+      // };
+      // socket.emit("slice upload", {
+      //   name: image.name,
+      //   type: image.type,
+      //   size: image.size,
+      //   data: arrayBuffer,
+      // });
     }
+    if (message && !image) {
+      socket.emit("sendMessage", { type: "text", content: message }, () =>
+        setMessage("")
+      );
+    } else return;
   };
 
   return (
@@ -65,6 +107,8 @@ const Chat = () => {
           message={message}
           setMessage={setMessage}
           sendMessage={sendMessage}
+          setImage={setImage}
+          uploadImage={uploadImage}
         />
       </div>
     </>

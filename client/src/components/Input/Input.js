@@ -32,16 +32,14 @@ const UploadButton = styled.div`
   }
 `;
 
-function Input({ setMessage, sendMessage, message }) {
-  const [image, setImage] = useState(null);
+function Input({ setMessage, sendMessage, message, setImage, uploadImage }) {
+  // const Send = (msg) => {
+  //   sendMessage(msg);
 
-  const Send = (msg) => {
-    const fd = FormData();
-    sendMessage(msg);
-    // if (!image) {
-    // } else {
-    // }
-  };
+  //   // if (!image) {
+  //   // } else {
+  //   // }
+  // };
 
   return (
     <form className="form">
@@ -56,10 +54,10 @@ function Input({ setMessage, sendMessage, message }) {
         }
       />
       <UploadButton>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+        <input type="file" onChange={(e) => uploadImage(e)} />
         <FontAwesomeIcon icon={faImage} />
       </UploadButton>
-      <button className="sendButton" onClick={(e) => Send(e)}>
+      <button className="sendButton" onClick={(e) => sendMessage(e)}>
         <FontAwesomeIcon icon={faCaretRight} size="2x" />
       </button>
     </form>
