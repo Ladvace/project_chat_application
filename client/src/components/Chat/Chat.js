@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { createReadStream } from "fs";
-import base64 from "base64-stream";
-import getStream from "get-stream";
 import io from "socket.io-client";
 import { useSelector, useDispatch } from "react-redux";
 import { push } from "connected-react-router";
@@ -44,6 +41,7 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("message", (message) => {
+      console.log("messagemessage", message);
       setMessages((messages) => [...messages, message]);
     });
 
@@ -57,12 +55,12 @@ const Chat = () => {
   }, []);
 
   const uploadImage = async (e) => {
+    console.log("IMG");
     let reader = new FileReader();
     let file = e.target.files[0];
 
     reader.onloadend = () => {
       setB64Image(reader.result);
-      console.log("I", reader.result);
       // this.setState({
       //   file: file,
       //   imagePreviewUrl: reader.result,
@@ -74,11 +72,13 @@ const Chat = () => {
 
   const sendMessage = async (event) => {
     event.preventDefault();
-    if (setB64Image) {
+    console.log("PP", messages, setB64Image);
+    if (b64Image) {
       console.log("TES", b64Image);
-      socket.emit("sendMessage", { type: "img", content: b64Image }, () =>
-        setB64Image(null)
-      );
+      socket.emit("sendMessage", { type: "img", content: b64Image }, () => {
+        setB64Image(null);
+        setMessage("");
+      });
       // slice = image.slice(0, 100000);
       // fileReader.readAsArrayBuffer(slice);
       // fileReader.onload = (evt) => {
@@ -90,8 +90,8 @@ const Chat = () => {
       //   size: image.size,
       //   data: arrayBuffer,
       // });
-    }
-    if (message && !image) {
+    } else if (message && !b64Image) {
+      console.log("M", message);
       socket.emit("sendMessage", { type: "text", content: message }, () =>
         setMessage("")
       );
