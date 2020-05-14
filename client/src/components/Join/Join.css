@@ -19,7 +19,7 @@ body {
   text-align: center;
   height: 100vh;
   align-items: center;
-  background-color: #e4dfda;
+  background-color: #084c61;
 }
 
 .joinInnerContainer {
@@ -37,22 +37,6 @@ body {
   font-size: 2.5em;
   padding-bottom: 10px;
   border-bottom: 2px solid white;
-}
-
-.button {
-  color: #fff !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: #ff6700;
-  padding: 20px;
-  border-radius: 5px;
-  display: inline-block;
-  border: none;
-  width: 100%;
-}
-
-.mt-20 {
-  margin-top: 20px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {

@@ -1,6 +1,7 @@
 const http = require("http");
 const express = require("express");
 const socketio = require("socket.io");
+const { queue } = require("./Queue");
 
 const {
   addUser,
@@ -15,6 +16,7 @@ const router = require("./router");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+const q = new queue();
 
 app.use(router);
 
@@ -25,6 +27,13 @@ io.on("connect", (socket) => {
 
     callback(userExist);
   });
+
+  socket.on("randomChat", (callback) => {
+    const userExist = checkUser(socket.id, name, room);
+
+    callback(userExist);
+  });
+
   socket.on("join", ({ name, room }, callback) => {
     if (name && room) {
       const { error, user } = addUser(socket.id, name, room);
@@ -41,12 +50,10 @@ io.on("connect", (socket) => {
         },
       });
 
-      socket.broadcast
-        .to(user.room)
-        .emit("message", {
-          user: "admin",
-          content: { type: "text", content: `${user.name} has joined!` },
-        });
+      socket.broadcast.to(user.room).emit("message", {
+        user: "admin",
+        content: { type: "text", content: `${user.name} has joined!` },
+      });
 
       io.to(user.room).emit("roomData", {
         room: user.room,

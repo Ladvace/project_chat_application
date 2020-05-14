@@ -5,6 +5,19 @@ import { faCaretRight, faImage } from "@fortawesome/free-solid-svg-icons";
 
 import "./Input.css";
 
+const Form = styled.form`
+  max-height: 100px;
+  display: flex;
+  margin: 10px 20px 20px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 420px) {
+    margin: 10px !important;
+  }
+`;
+
 const UploadButton = styled.div`
   color: #fff !important;
   text-transform: uppercase;
@@ -32,6 +45,23 @@ const UploadButton = styled.div`
   }
 `;
 
+const SendButton = styled.button`
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ff6700;
+  padding: 20px;
+  display: inline-block;
+  border: none;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-left: 20px;
+  @media screen and (max-width: 376px) {
+    display: none;
+  }
+`;
+
 function Input({ setMessage, sendMessage, message, setImage, uploadImage }) {
   // const Send = (msg) => {
   //   sendMessage(msg);
@@ -42,7 +72,7 @@ function Input({ setMessage, sendMessage, message, setImage, uploadImage }) {
   // };
 
   return (
-    <form className="form">
+    <Form>
       <input
         className="input"
         type="text"
@@ -57,10 +87,10 @@ function Input({ setMessage, sendMessage, message, setImage, uploadImage }) {
         <input type="file" onChange={(e) => uploadImage(e)} />
         <FontAwesomeIcon icon={faImage} />
       </UploadButton>
-      <button className="sendButton" onClick={(e) => sendMessage(e)}>
+      <SendButton onClick={(e) => sendMessage(e)}>
         <FontAwesomeIcon icon={faCaretRight} size="2x" />
-      </button>
-    </form>
+      </SendButton>
+    </Form>
   );
 }
 

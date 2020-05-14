@@ -26,7 +26,7 @@ const Chat = () => {
 
   const data = useSelector((state) => state.login);
 
-  const ENDPOINT = "http://51.158.163.62:5000";
+  const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
     socket = io(ENDPOINT);

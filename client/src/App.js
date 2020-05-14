@@ -15,7 +15,7 @@ const App = () => {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
-          <Route path="/" render={() => <Join />} />
+          <Route exact path="/" render={() => <Join />} />
           <Route exact path="/chat" render={() => <Chat />} />
           <Route render={() => <div>Miss</div>} />
           {/* <Route render={() => <Join />} /> */}

@@ -32,6 +32,38 @@ const Input = styled.input`
   width: 100%;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const Button = styled.button`
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ff6700;
+  padding: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  width: 100%;
+`;
+
+const RandomChatButton = styled.button`
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ff6700;
+  padding: 20px;
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  width: 100%;
+  margin-left: 20px;
+`;
+
 export default function SignIn() {
   const [name, setName] = useState(null);
   const [room, setRoom] = useState(null);
@@ -39,7 +71,7 @@ export default function SignIn() {
 
   const dispatch = useDispatch();
 
-  const ENDPOINT = "http://51.158.163.62:5000";
+  const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -69,6 +101,18 @@ export default function SignIn() {
     }
   };
 
+  const joinRandomRoom = () => {
+    socket.emit("randomChat", (error) => {
+      if (error) {
+        console.log("err");
+        alert("Error while Connectiong");
+      } else {
+        // dispatch(login(name, room));
+        // dispatch(push("/chat"));
+      }
+    });
+  };
+
   return (
     <div className="joinOuterContainer">
       <InnerContainer>
@@ -87,13 +131,14 @@ export default function SignIn() {
             onChange={(event) => setRoom(event.target.value)}
           />
         </div>
-        <button
-          onClick={(e) => joinRoom(e)}
-          className={"button mt-20"}
-          type="submit"
-        >
-          Sign In
-        </button>
+        <Buttons>
+          <Button onClick={(e) => joinRoom(e)} type="submit">
+            Sign In
+          </Button>
+          <RandomChatButton onClick={(e) => joinRandomRoom(e)} type="submit">
+            random chat
+          </RandomChatButton>
+        </Buttons>
         <div>
           {enterValidData && <Error>Enter all the required data</Error>}
         </div>
