@@ -77,6 +77,13 @@ export default function SignIn() {
     socket = io(ENDPOINT);
   }, [ENDPOINT]);
 
+  // useEffect(() => {
+  //   socket.on("startChat", ({ name, room }) => {
+  //     console.log("startChat");
+  //     dispatch(login(socket.id, nul, true));
+  //   });
+  // }, []);
+
   const joinRoom = () => {
     if (!name && !room) {
       seTenterValidData(true);
@@ -102,15 +109,8 @@ export default function SignIn() {
   };
 
   const joinRandomRoom = () => {
-    socket.emit("randomChat", (error) => {
-      if (error) {
-        console.log("err");
-        alert("Error while Connectiong");
-      } else {
-        // dispatch(login(name, room));
-        // dispatch(push("/chat"));
-      }
-    });
+    dispatch(push("/chat"));
+    // dispatch(login(socket.id, null, true));
   };
 
   return (

@@ -12,6 +12,14 @@ class Queue {
     this.length = 0;
   }
 
+  getFirst() {
+    return this.first.data;
+  }
+
+  count() {
+    return this.length;
+  }
+
   // Add an element to the queue
   enqueue(data) {
     // Create a new node with the given data

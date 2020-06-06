@@ -1,10 +1,10 @@
 import * as ActionTypes from "./actionTypes";
 
-export function login(name, room) {
+export function login(name, room, random) {
   return (dispatch) => {
     dispatch({
       type: ActionTypes.LOGIN,
-      data: { name: name, room: room },
+      data: { name: name, room: room, random: random },
     });
   };
 }

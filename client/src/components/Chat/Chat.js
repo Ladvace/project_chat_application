@@ -31,17 +31,24 @@ const Chat = () => {
   useEffect(() => {
     socket = io(ENDPOINT);
     setRoom(data.room);
-    setName(data.name);
-    socket.emit("join", { name: data.name, room: data.room }, (error) => {
-      if (error) {
-        alert(error);
+
+    console.log("PXPXP", data);
+
+    socket.emit(
+      "randomChat",
+      // { name: data.name, room: data.room, random: data.random },
+      (error) => {
+        if (error) {
+          alert(error);
+        }
       }
-    });
+    );
   }, [ENDPOINT]);
 
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log("messagemessage", message);
+      // setName(socket.id);
+      setName(message.user);
       setMessages((messages) => [...messages, message]);
     });
 

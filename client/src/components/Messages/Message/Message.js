@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useSelector } from "react";
 import styled from "styled-components";
 
 import "./Message.css";
@@ -36,9 +36,9 @@ const Image = styled.img`
 const Message = ({ message: { content, user }, name }) => {
   let isSentByCurrentUser = false;
 
-  console.log("D", content);
-
   const trimmedName = name.trim().toLowerCase();
+
+  console.log("DD", trimmedName, trimmedName === "you", user);
 
   if (user === trimmedName) {
     isSentByCurrentUser = true;
@@ -47,7 +47,7 @@ const Message = ({ message: { content, user }, name }) => {
   return content.type === "text" ? (
     isSentByCurrentUser ? (
       <MessageContainer justify={"justifyEnd"}>
-        <p className="sentText pr-10">you</p>
+        <p className="sentText pr-10">{user}</p>
         <MessageBox bg={"main"}>
           <p className="messageText colorWhite">
             {ReactEmoji.emojify(content.content)}
@@ -66,7 +66,7 @@ const Message = ({ message: { content, user }, name }) => {
     )
   ) : isSentByCurrentUser ? (
     <MessageContainer justify={"justifyEnd"}>
-      <p className="sentText pr-10">you</p>
+      <p className="sentText pr-10">Stranger</p>
       <MessageBox bg={"main"}>
         <Image
           className="messageText colorWhite"
